@@ -12,7 +12,12 @@
 		"test": "npm run lint && npm run karma-ci",
 		"build": "ui5 build -a --clean-dest",
 		"build-self-contained": "ui5 build self-contained -a --clean-dest --exclude-task=createDebugFiles",
-		"serve-dist": "ws --compress -d dist"
+		"build-optimized": "npm run build-optimized-clean && npm run build-optimized-copy-app && npm run build-optimized-copy-sap",
+		"build-optimized-clean": "rm -rf dist-optimized",
+		"build-optimized-copy-app": "rsync -zarv --exclude='resources/sap/' --include='*' 'dist/' 'dist-optimized'",
+		"build-optimized-copy-sap": "rsync -zarv --include='*/' --include='**/*.css' --include='**/*.properties' --include='**/*.woff2' --exclude='*' 'dist/' 'dist-optimized'",
+		"serve-dist": "ws --compress -d dist",
+		"serve-optimized-dist": "ws --compress -d dist-optimized"
 	},
 	"dependencies": {},
 	"devDependencies": {
